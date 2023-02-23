@@ -11,8 +11,10 @@ class Fact:
 class Problem:
     def __init__(self, facts: dict) -> None:
         self.facts = facts
-        self.questionCount = 0
-        self.history = []
+
+    # get list of all verifiers
+    def getVerifiers(self) -> dict:
+        return {fact: self.facts[fact].verifier for fact in self.facts.keys()}
 
     # check if a number satisfies all facts
     def isSolution(self, number: int) -> bool:
@@ -20,12 +22,4 @@ class Problem:
 
     # check if a number satisfies a specific verifier
     def check(self, number: int, verifierName: str) -> bool:
-        self.questionCount += 1
-        result =  self.facts[verifierName].verify(number)
-        self.history.append((number, verifierName, result))
-        return result
-
-    # reset the question count
-    def reset(self) -> None:
-        self.questionCount = 0
-        self.history = []
+        return self.facts[verifierName].verify(number)
